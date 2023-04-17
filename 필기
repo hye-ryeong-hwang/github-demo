@@ -1,0 +1,847 @@
+working directory, staging area, repository
+(read me 파일은 첨부터 있는 것.)
+hard reset은 전부 취소 1,2,3 취소
+mixed reset은 추가한 것까지만 취소 워킹트리에 있는 것은 건들지 않고.1번 빼고 2,3번만
+(head는 마지막 commit을 가리키는 포인트) 
+soft reset은 commit만 취소 3번째 것만 취소 
+
+
+
+양쪽 다 수정하면 충돌 발생함.
+
+git사용 이유 : 백업 버전관리 협업
+
+branch 이유 = 
+
+branch 변경할때 쓰는 것 = checkout
+
+-b = 만들면서 이동한는 것
+
+user@FR-311-08 MINGW64 /d/GitWORK (main)
+$ pwd
+/d/GitWORK
+
+user@FR-311-08 MINGW64 /d/GitWORK (main)
+$ ls -al
+total 9
+drwxr-xr-x 1 user 197121  0 Apr 10 18:25 ./
+drwxr-xr-x 1 user 197121  0 Apr 10 16:36 ../
+drwxr-xr-x 1 user 197121  0 Apr 10 18:47 .git/
+-rw-r--r-- 1 user 197121  0 Apr 10 17:12 .gitignore
+-rw-r--r-- 1 user 197121 47 Apr 10 18:45 index.html
+
+user@FR-311-08 MINGW64 /d/GitWORK (main)
+$ rm -rf .git
+
+user@FR-311-08 MINGW64 /d/GitWORK
+$ ls
+index.html
+
+user@FR-311-08 MINGW64 /d/GitWORK
+$ rm index.html
+
+user@FR-311-08 MINGW64 /d/GitWORK
+$ ls -al
+total 4
+drwxr-xr-x 1 user 197121 0 Apr 17 17:00 ./
+drwxr-xr-x 1 user 197121 0 Apr 10 16:36 ../
+-rw-r--r-- 1 user 197121 0 Apr 10 17:12 .gitignore
+
+user@FR-311-08 MINGW64 /d/GitWORK
+$
+
+user@FR-311-08 MINGW64 /d/GitWORK
+$ git init
+Initialized empty Git repository in D:/GitWORK/.git/
+
+user@FR-311-08 MINGW64 /d/GitWORK (main)
+$ git config user.name gpfud
+
+user@FR-311-08 MINGW64 /d/GitWORK (main)
+$ git config user.email gpfud0602@gmail.com
+
+user@FR-311-08 MINGW64 /d/GitWORK (main)
+$ ls -al
+total 8
+drwxr-xr-x 1 user 197121 0 Apr 17 17:01 ./
+drwxr-xr-x 1 user 197121 0 Apr 10 16:36 ../
+drwxr-xr-x 1 user 197121 0 Apr 17 17:02 .git/
+-rw-r--r-- 1 user 197121 0 Apr 10 17:12 .gitignore
+
+user@FR-311-08 MINGW64 /d/GitWORK (main)
+$ git branch
+
+user@FR-311-08 MINGW64 /d/GitWORK (main)
+$ touch README.md
+
+user@FR-311-08 MINGW64 /d/GitWORK (main)
+$ git add .
+
+user@FR-311-08 MINGW64 /d/GitWORK (main)
+$ git status
+On branch main
+
+No commits yet
+
+Changes to be committed:
+  (use "git rm --cached <file>..." to unstage)
+        new file:   .gitignore
+        new file:   README.md
+
+
+user@FR-311-08 MINGW64 /d/GitWORK (main)
+$ git commit -m 'ADD README.md File'
+[main (root-commit) 3cfdff8] ADD README.md File
+ 2 files changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 .gitignore
+ create mode 100644 README.md
+
+user@FR-311-08 MINGW64 /d/GitWORK (main)
+$ git log
+commit 3cfdff880e28ca75216357611d52ec55e3f7e7b2 (HEAD -> main)
+Author: gpfud <gpfud0602@gmail.com>
+Date:   Mon Apr 17 17:29:55 2023 +0900
+
+    ADD README.md File
+
+user@FR-311-08 MINGW64 /d/GitWORK (main)
+$ git branch
+* main
+
+user@FR-311-08 MINGW64 /d/GitWORK (main)
+$ git branch develop
+
+user@FR-311-08 MINGW64 /d/GitWORK (main)
+$ git branch
+  develop
+* main
+
+user@FR-311-08 MINGW64 /d/GitWORK (main)
+$ git branch -d develop
+Deleted branch develop (was 3cfdff8).
+
+user@FR-311-08 MINGW64 /d/GitWORK (main)
+$ git branch
+* main
+
+user@FR-311-08 MINGW64 /d/GitWORK (main)
+$ git branch
+* main
+
+user@FR-311-08 MINGW64 /d/GitWORK (main)
+$ git branch develop
+
+user@FR-311-08 MINGW64 /d/GitWORK (main)
+$ git branch
+  develop
+* main
+
+user@FR-311-08 MINGW64 /d/GitWORK (main)
+$ ls -al
+total 8
+drwxr-xr-x 1 user 197121 0 Apr 17 17:29 ./
+drwxr-xr-x 1 user 197121 0 Apr 10 16:36 ../
+drwxr-xr-x 1 user 197121 0 Apr 17 17:32 .git/
+-rw-r--r-- 1 user 197121 0 Apr 10 17:12 .gitignore
+-rw-r--r-- 1 user 197121 0 Apr 17 17:29 README.md
+
+user@FR-311-08 MINGW64 /d/GitWORK (main)
+$ git log --oneline
+3cfdff8 (HEAD -> main, develop) ADD README.md File
+
+user@FR-311-08 MINGW64 /d/GitWORK (main)
+$ git checkout develop
+Switched to branch 'develop'
+
+user@FR-311-08 MINGW64 /d/GitWORK (develop)
+$ git branch
+* develop
+  main
+
+user@FR-311-08 MINGW64 /d/GitWORK (develop)
+$ echo '<html></html>' > README.md
+
+user@FR-311-08 MINGW64 /d/GitWORK (develop)
+$ ls
+README.md
+
+user@FR-311-08 MINGW64 /d/GitWORK (develop)
+$ git checkout main
+Switched to branch 'main'
+M       README.md
+
+user@FR-311-08 MINGW64 /d/GitWORK (main)
+$ ls
+README.md
+
+user@FR-311-08 MINGW64 /d/GitWORK (main)
+$ git checkout develop
+Switched to branch 'develop'
+M       README.md
+
+user@FR-311-08 MINGW64 /d/GitWORK (develop)
+$ git commit -am 'Modify README.md File'
+warning: in the working copy of 'README.md', LF will be replaced by CRLF the next time Git touches it
+[develop b558c7a] Modify README.md File
+ 1 file changed, 1 insertion(+)
+
+user@FR-311-08 MINGW64 /d/GitWORK (develop)
+$ git log
+commit b558c7a20aa8de944a320bede33851e0cb119d3a (HEAD -> develop)
+Author: gpfud <gpfud0602@gmail.com>
+Date:   Mon Apr 17 17:57:09 2023 +0900
+
+    Modify README.md File
+
+commit 3cfdff880e28ca75216357611d52ec55e3f7e7b2 (main)
+Author: gpfud <gpfud0602@gmail.com>
+Date:   Mon Apr 17 17:29:55 2023 +0900
+
+    ADD README.md File
+
+user@FR-311-08 MINGW64 /d/GitWORK (develop)
+$ ls
+README.md
+
+user@FR-311-08 MINGW64 /d/GitWORK (develop)
+$ git checkout main
+Switched to branch 'main'
+
+user@FR-311-08 MINGW64 /d/GitWORK (main)
+$ ls
+README.md
+
+user@FR-311-08 MINGW64 /d/GitWORK (main)
+$ git log --oneline --graph --decorate --all
+* b558c7a (develop) Modify README.md File
+* 3cfdff8 (HEAD -> main) ADD README.md File
+
+user@FR-311-08 MINGW64 /d/GitWORK (main)
+$ git checkout 3cfdff8
+Note: switching to '3cfdff8'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by switching back to a branch.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -c with the switch command. Example:
+
+  git switch -c <new-branch-name>
+
+Or undo this operation with:
+
+  git switch -
+
+Turn off this advice by setting config variable advice.detachedHead to
+false
+
+HEAD is now at 3cfdff8 ADD README.md File
+
+user@FR-311-08 MINGW64 /d/GitWORK ((3cfdff8...))
+$ cat README.md
+
+user@FR-311-08 MINGW64 /d/GitWORK ((3cfdff8...))
+$ git log --oneline --graph --decorate --all
+* b558c7a (develop) Modify README.md File
+* 3cfdff8 (HEAD, main) ADD README.md File
+
+user@FR-311-08 MINGW64 /d/GitWORK ((3cfdff8...))
+$ git checkout b558c7a
+Previous HEAD position was 3cfdff8 ADD README.md File
+HEAD is now at b558c7a Modify README.md File
+
+user@FR-311-08 MINGW64 /d/GitWORK ((b558c7a...))
+$ cat README.md
+<html></html>
+
+user@FR-311-08 MINGW64 /d/GitWORK ((b558c7a...))
+$ git checkout main
+Previous HEAD position was b558c7a Modify README.md File
+Switched to branch 'main'
+
+user@FR-311-08 MINGW64 /d/GitWORK (main)
+$ nano README.md
+
+user@FR-311-08 MINGW64 /d/GitWORK (main)
+$ cat README.md
+<html>
+   <head></head>
+</html>
+
+user@FR-311-08 MINGW64 /d/GitWORK (main)
+$ git commit -am 'Add head Tag'
+warning: in the working copy of 'README.md', LF will be replaced by CRLF the next time Git touches it
+[main 87e56e1] Add head Tag
+ 1 file changed, 3 insertions(+)
+
+user@FR-311-08 MINGW64 /d/GitWORK (main)
+$ git checkout develop
+Switched to branch 'develop'
+
+user@FR-311-08 MINGW64 /d/GitWORK (develop)
+$ cat README.md
+<html></html>
+
+user@FR-311-08 MINGW64 /d/GitWORK (develop)
+$ nano README.md
+
+user@FR-311-08 MINGW64 /d/GitWORK (develop)
+$ git commit -am 'Add body tag'
+[develop ce27bd7] Add body tag
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+user@FR-311-08 MINGW64 /d/GitWORK (develop)
+$ cat README.md
+<html>
+   <body></body>
+</html>
+
+user@FR-311-08 MINGW64 /d/GitWORK (develop)
+$ git checkout main
+Switched to branch 'main'
+
+user@FR-311-08 MINGW64 /d/GitWORK (main)
+$ cat README.md
+<html>
+   <head></head>
+</html>
+
+user@FR-311-08 MINGW64 /d/GitWORK (main)
+$ git branch
+  develop
+* main
+
+user@FR-311-08 MINGW64 /d/GitWORK (main)
+$ git merge develop
+Auto-merging README.md
+CONFLICT (content): Merge conflict in README.md
+Automatic merge failed; fix conflicts and then commit the result.
+
+user@FR-311-08 MINGW64 /d/GitWORK (main|MERGING)
+$ cat README.md
+<<<<<<< HEAD
+<html>
+   <head></head>
+=======
+<html>
+   <body></body>
+>>>>>>> develop
+</html>
+
+user@FR-311-08 MINGW64 /d/GitWORK (main|MERGING)
+$ nano README.md
+
+user@FR-311-08 MINGW64 /d/GitWORK (main|MERGING)
+$ cat README.md
+<html>
+   <head></head>
+   <body></body>
+</html>
+
+user@FR-311-08 MINGW64 /d/GitWORK (main|MERGING)
+$ git commit -am 'Final version README.md'
+[main 68b1a55] Final version README.md
+
+user@FR-311-08 MINGW64 /d/GitWORK (main)
+$ git log --oneline --graph --decorate --all
+*   68b1a55 (HEAD -> main) Final version README.md
+|\
+| * ce27bd7 (develop) Add body tag
+| * b558c7a Modify README.md File
+* | 87e56e1 Add head Tag
+|/
+* 3cfdff8 ADD README.md File
+
+user@FR-311-08 MINGW64 /d/GitWORK (main)
+$
+
+
+user@FR-311-08 MINGW64 /d/GitWORK (main)
+$ pwd
+/d/GitWORK
+
+user@FR-311-08 MINGW64 /d/GitWORK (main)
+$ ls -al
+total 9
+drwxr-xr-x 1 user 197121  0 Apr 10 18:25 ./
+drwxr-xr-x 1 user 197121  0 Apr 10 16:36 ../
+drwxr-xr-x 1 user 197121  0 Apr 10 18:47 .git/
+-rw-r--r-- 1 user 197121  0 Apr 10 17:12 .gitignore
+-rw-r--r-- 1 user 197121 47 Apr 10 18:45 index.html
+
+user@FR-311-08 MINGW64 /d/GitWORK (main)
+$ rm -rf .git
+
+user@FR-311-08 MINGW64 /d/GitWORK
+$ ls
+index.html
+
+user@FR-311-08 MINGW64 /d/GitWORK
+$ rm index.html
+
+user@FR-311-08 MINGW64 /d/GitWORK
+$ ls -al
+total 4
+drwxr-xr-x 1 user 197121 0 Apr 17 17:00 ./
+drwxr-xr-x 1 user 197121 0 Apr 10 16:36 ../
+-rw-r--r-- 1 user 197121 0 Apr 10 17:12 .gitignore
+
+user@FR-311-08 MINGW64 /d/GitWORK
+$
+
+user@FR-311-08 MINGW64 /d/GitWORK
+$ git init
+Initialized empty Git repository in D:/GitWORK/.git/
+
+user@FR-311-08 MINGW64 /d/GitWORK (main)
+$ git config user.name gpfud
+
+user@FR-311-08 MINGW64 /d/GitWORK (main)
+$ git config user.email gpfud0602@gmail.com
+
+user@FR-311-08 MINGW64 /d/GitWORK (main)
+$ ls -al
+total 8
+drwxr-xr-x 1 user 197121 0 Apr 17 17:01 ./
+drwxr-xr-x 1 user 197121 0 Apr 10 16:36 ../
+drwxr-xr-x 1 user 197121 0 Apr 17 17:02 .git/
+-rw-r--r-- 1 user 197121 0 Apr 10 17:12 .gitignore
+
+user@FR-311-08 MINGW64 /d/GitWORK (main)
+$ git branch
+
+user@FR-311-08 MINGW64 /d/GitWORK (main)
+$ touch README.md
+
+user@FR-311-08 MINGW64 /d/GitWORK (main)
+$ git add .
+
+user@FR-311-08 MINGW64 /d/GitWORK (main)
+$ git status
+On branch main
+
+No commits yet
+
+Changes to be committed:
+  (use "git rm --cached <file>..." to unstage)
+        new file:   .gitignore
+        new file:   README.md
+
+
+user@FR-311-08 MINGW64 /d/GitWORK (main)
+$ git commit -m 'ADD README.md File'
+[main (root-commit) 3cfdff8] ADD README.md File
+ 2 files changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 .gitignore
+ create mode 100644 README.md
+
+user@FR-311-08 MINGW64 /d/GitWORK (main)
+$ git log
+commit 3cfdff880e28ca75216357611d52ec55e3f7e7b2 (HEAD -> main)
+Author: gpfud <gpfud0602@gmail.com>
+Date:   Mon Apr 17 17:29:55 2023 +0900
+
+    ADD README.md File
+
+user@FR-311-08 MINGW64 /d/GitWORK (main)
+$ git branch
+* main
+
+user@FR-311-08 MINGW64 /d/GitWORK (main)
+$ git branch develop
+
+user@FR-311-08 MINGW64 /d/GitWORK (main)
+$ git branch
+  develop
+* main
+
+user@FR-311-08 MINGW64 /d/GitWORK (main)
+$ git branch -d develop
+Deleted branch develop (was 3cfdff8).
+
+user@FR-311-08 MINGW64 /d/GitWORK (main)
+$ git branch
+* main
+
+user@FR-311-08 MINGW64 /d/GitWORK (main)
+$ git branch
+* main
+
+user@FR-311-08 MINGW64 /d/GitWORK (main)
+$ git branch develop
+
+user@FR-311-08 MINGW64 /d/GitWORK (main)
+$ git branch
+  develop
+* main
+
+user@FR-311-08 MINGW64 /d/GitWORK (main)
+$ ls -al
+total 8
+drwxr-xr-x 1 user 197121 0 Apr 17 17:29 ./
+drwxr-xr-x 1 user 197121 0 Apr 10 16:36 ../
+drwxr-xr-x 1 user 197121 0 Apr 17 17:32 .git/
+-rw-r--r-- 1 user 197121 0 Apr 10 17:12 .gitignore
+-rw-r--r-- 1 user 197121 0 Apr 17 17:29 README.md
+
+user@FR-311-08 MINGW64 /d/GitWORK (main)
+$ git log --oneline
+3cfdff8 (HEAD -> main, develop) ADD README.md File
+
+user@FR-311-08 MINGW64 /d/GitWORK (main)
+$ git checkout develop
+Switched to branch 'develop'
+
+user@FR-311-08 MINGW64 /d/GitWORK (develop)
+$ git branch
+* develop
+  main
+
+user@FR-311-08 MINGW64 /d/GitWORK (develop)
+$ echo '<html></html>' > README.md
+
+user@FR-311-08 MINGW64 /d/GitWORK (develop)
+$ ls
+README.md
+
+user@FR-311-08 MINGW64 /d/GitWORK (develop)
+$ git checkout main
+Switched to branch 'main'
+M       README.md
+
+user@FR-311-08 MINGW64 /d/GitWORK (main)
+$ ls
+README.md
+
+user@FR-311-08 MINGW64 /d/GitWORK (main)
+$ git checkout develop
+Switched to branch 'develop'
+M       README.md
+
+user@FR-311-08 MINGW64 /d/GitWORK (develop)
+$ git commit -am 'Modify README.md File'
+warning: in the working copy of 'README.md', LF will be replaced by CRLF the next time Git touches it
+[develop b558c7a] Modify README.md File
+ 1 file changed, 1 insertion(+)
+
+user@FR-311-08 MINGW64 /d/GitWORK (develop)
+$ git log
+commit b558c7a20aa8de944a320bede33851e0cb119d3a (HEAD -> develop)
+Author: gpfud <gpfud0602@gmail.com>
+Date:   Mon Apr 17 17:57:09 2023 +0900
+
+    Modify README.md File
+
+commit 3cfdff880e28ca75216357611d52ec55e3f7e7b2 (main)
+Author: gpfud <gpfud0602@gmail.com>
+Date:   Mon Apr 17 17:29:55 2023 +0900
+
+    ADD README.md File
+
+user@FR-311-08 MINGW64 /d/GitWORK (develop)
+$ ls
+README.md
+
+user@FR-311-08 MINGW64 /d/GitWORK (develop)
+$ git checkout main
+Switched to branch 'main'
+
+user@FR-311-08 MINGW64 /d/GitWORK (main)
+$ ls
+README.md
+
+user@FR-311-08 MINGW64 /d/GitWORK (main)
+$ git log --oneline --graph --decorate --all
+* b558c7a (develop) Modify README.md File
+* 3cfdff8 (HEAD -> main) ADD README.md File
+
+user@FR-311-08 MINGW64 /d/GitWORK (main)
+$ git checkout 3cfdff8
+Note: switching to '3cfdff8'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by switching back to a branch.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -c with the switch command. Example:
+
+  git switch -c <new-branch-name>
+
+Or undo this operation with:
+
+  git switch -
+
+Turn off this advice by setting config variable advice.detachedHead to
+false
+
+HEAD is now at 3cfdff8 ADD README.md File
+
+user@FR-311-08 MINGW64 /d/GitWORK ((3cfdff8...))
+$ cat README.md
+
+user@FR-311-08 MINGW64 /d/GitWORK ((3cfdff8...))
+$ git log --oneline --graph --decorate --all
+* b558c7a (develop) Modify README.md File
+* 3cfdff8 (HEAD, main) ADD README.md File
+
+user@FR-311-08 MINGW64 /d/GitWORK ((3cfdff8...))
+$ git checkout b558c7a
+Previous HEAD position was 3cfdff8 ADD README.md File
+HEAD is now at b558c7a Modify README.md File
+
+user@FR-311-08 MINGW64 /d/GitWORK ((b558c7a...))
+$ cat README.md
+<html></html>
+
+user@FR-311-08 MINGW64 /d/GitWORK ((b558c7a...))
+$ git checkout main
+Previous HEAD position was b558c7a Modify README.md File
+Switched to branch 'main'
+
+user@FR-311-08 MINGW64 /d/GitWORK (main)
+$ nano README.md
+
+user@FR-311-08 MINGW64 /d/GitWORK (main)
+$ cat README.md
+<html>
+   <head></head>
+</html>
+
+user@FR-311-08 MINGW64 /d/GitWORK (main)
+$ git commit -am 'Add head Tag'
+warning: in the working copy of 'README.md', LF will be replaced by CRLF the next time Git touches it
+[main 87e56e1] Add head Tag
+ 1 file changed, 3 insertions(+)
+
+user@FR-311-08 MINGW64 /d/GitWORK (main)
+$ git checkout develop
+Switched to branch 'develop'
+
+user@FR-311-08 MINGW64 /d/GitWORK (develop)
+$ cat README.md
+<html></html>
+
+user@FR-311-08 MINGW64 /d/GitWORK (develop)
+$ nano README.md
+
+user@FR-311-08 MINGW64 /d/GitWORK (develop)
+$ git commit -am 'Add body tag'
+[develop ce27bd7] Add body tag
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+user@FR-311-08 MINGW64 /d/GitWORK (develop)
+$ cat README.md
+<html>
+   <body></body>
+</html>
+
+user@FR-311-08 MINGW64 /d/GitWORK (develop)
+$ git checkout main
+Switched to branch 'main'
+
+user@FR-311-08 MINGW64 /d/GitWORK (main)
+$ cat README.md
+<html>
+   <head></head>
+</html>
+
+user@FR-311-08 MINGW64 /d/GitWORK (main)
+$ git branch
+  develop
+* main
+
+user@FR-311-08 MINGW64 /d/GitWORK (main)
+$ git merge develop
+Auto-merging README.md
+CONFLICT (content): Merge conflict in README.md
+Automatic merge failed; fix conflicts and then commit the result.
+
+user@FR-311-08 MINGW64 /d/GitWORK (main|MERGING)
+$ cat README.md
+<<<<<<< HEAD
+<html>
+   <head></head>
+=======
+<html>
+   <body></body>
+>>>>>>> develop
+</html>
+
+user@FR-311-08 MINGW64 /d/GitWORK (main|MERGING)
+$ nano README.md
+
+user@FR-311-08 MINGW64 /d/GitWORK (main|MERGING)
+$ cat README.md
+<html>
+   <head></head>
+   <body></body>
+</html>
+
+user@FR-311-08 MINGW64 /d/GitWORK (main|MERGING)
+$ git commit -am 'Final version README.md'
+[main 68b1a55] Final version README.md
+
+user@FR-311-08 MINGW64 /d/GitWORK (main)
+$ git log --oneline --graph --decorate --all
+*   68b1a55 (HEAD -> main) Final version README.md
+|\
+| * ce27bd7 (develop) Add body tag
+| * b558c7a Modify README.md File
+* | 87e56e1 Add head Tag
+|/
+* 3cfdff8 ADD README.md File
+
+user@FR-311-08 MINGW64 /d/GitWORK (main)
+$ rm -rf .git
+
+user@FR-311-08 MINGW64 /d/GitWORK
+$ rm README.md
+
+user@FR-311-08 MINGW64 /d/GitWORK
+$ ls -al
+total 4
+drwxr-xr-x 1 user 197121 0 Apr 17 18:43 ./
+drwxr-xr-x 1 user 197121 0 Apr 10 16:36 ../
+-rw-r--r-- 1 user 197121 0 Apr 10 17:12 .gitignore
+
+user@FR-311-08 MINGW64 /d/GitWORK
+$ rm .gitignore
+
+user@FR-311-08 MINGW64 /d/GitWORK
+$ ls -al
+total 4
+drwxr-xr-x 1 user 197121 0 Apr 17 18:43 ./
+drwxr-xr-x 1 user 197121 0 Apr 10 16:36 ../
+
+user@FR-311-08 MINGW64 /d/GitWORK
+$ git clone https://github.com/hye-ryeong-hwang/github-demo.git
+Cloning into 'github-demo'...
+remote: Enumerating objects: 5, done.
+remote: Counting objects: 100% (5/5), done.
+remote: Compressing objects: 100% (4/4), done.
+remote: Total 5 (delta 0), reused 0 (delta 0), pack-reused 0
+Receiving objects: 100% (5/5), 5.49 KiB | 5.49 MiB/s, done.
+
+user@FR-311-08 MINGW64 /d/GitWORK
+$ ls
+github-demo/
+
+user@FR-311-08 MINGW64 /d/GitWORK
+$ cd github-demo/
+
+user@FR-311-08 MINGW64 /d/GitWORK/github-demo (main)
+$ ls -al
+total 21
+drwxr-xr-x 1 user 197121     0 Apr 17 18:44 ./
+drwxr-xr-x 1 user 197121     0 Apr 17 18:44 ../
+drwxr-xr-x 1 user 197121     0 Apr 17 18:44 .git/
+-rw-r--r-- 1 user 197121  1928 Apr 17 18:44 .gitignore
+-rw-r--r-- 1 user 197121 11558 Apr 17 18:44 LICENSE
+-rw-r--r-- 1 user 197121    13 Apr 17 18:44 README.md
+
+user@FR-311-08 MINGW64 /d/GitWORK/github-demo (main)
+$ git remote -v
+origin  https://github.com/hye-ryeong-hwang/github-demo.git (fetch)
+origin  https://github.com/hye-ryeong-hwang/github-demo.git (push)
+
+user@FR-311-08 MINGW64 /d/GitWORK/github-demo (main)
+$ echo '<html><html>' > index.html
+
+user@FR-311-08 MINGW64 /d/GitWORK/github-demo (main)
+$ git status
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        index.html
+
+nothing added to commit but untracked files present (use "git add" to track)
+
+user@FR-311-08 MINGW64 /d/GitWORK/github-demo (main)
+$ git add index.html
+warning: in the working copy of 'index.html', LF will be replaced by CRLF the next time Git touches it
+
+user@FR-311-08 MINGW64 /d/GitWORK/github-demo (main)
+$ git commit -m 'Create index.html File'
+Author identity unknown
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email "you@example.com"
+  git config --global user.name "Your Name"
+
+to set your account's default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got 'user@FR-311-08.(none)')
+
+user@FR-311-08 MINGW64 /d/GitWORK/github-demo (main)
+$ git config user.name gpfud
+
+user@FR-311-08 MINGW64 /d/GitWORK/github-demo (main)
+$ git config user.email gpfud0602@gmail.com
+
+user@FR-311-08 MINGW64 /d/GitWORK/github-demo (main)
+$ git commi -m 'create index.html file'
+git: 'commi' is not a git command. See 'git --help'.
+
+The most similar commands are
+        commit
+        column
+        config
+
+user@FR-311-08 MINGW64 /d/GitWORK/github-demo (main)
+$ git push
+Everything up-to-date
+
+user@FR-311-08 MINGW64 /d/GitWORK/github-demo (main)
+$ git push
+Everything up-to-date
+
+user@FR-311-08 MINGW64 /d/GitWORK/github-demo (main)
+$  git commit -m 'create index.html file'
+[main fda46d5] create index.html file
+ 1 file changed, 1 insertion(+)
+ create mode 100644 index.html
+
+user@FR-311-08 MINGW64 /d/GitWORK/github-demo (main)
+$ git push
+Enumerating objects: 4, done.
+Counting objects: 100% (4/4), done.
+Delta compression using up to 8 threads
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (3/3), 280 bytes | 280.00 KiB/s, done.
+Total 3 (delta 1), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (1/1), completed with 1 local object.
+To https://github.com/hye-ryeong-hwang/github-demo.git
+   e4952e9..fda46d5  main -> main
+
+user@FR-311-08 MINGW64 /d/GitWORK/github-demo (main)
+$ git pull
+remote: Enumerating objects: 4, done.
+remote: Counting objects: 100% (4/4), done.
+remote: Compressing objects: 100% (2/2), done.
+remote: Total 3 (delta 1), reused 0 (delta 0), pack-reused 0
+Unpacking objects: 100% (3/3), 659 bytes | 2.00 KiB/s, done.
+From https://github.com/hye-ryeong-hwang/github-demo
+   fda46d5..75e1535  main       -> origin/main
+Updating fda46d5..75e1535
+Fast-forward
+ about.html | 1 +
+ 1 file changed, 1 insertion(+)
+ create mode 100644 about.html
+
+user@FR-311-08 MINGW64 /d/GitWORK/github-demo (main)
+$ ls
+about.html  index.html  LICENSE  README.md
+
+user@FR-311-08 MINGW64 /d/GitWORK/github-demo (main)
+$ cat about.html
+우하하하
+
+ git push
